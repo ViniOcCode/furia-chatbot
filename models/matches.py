@@ -3,21 +3,46 @@ from bs4 import BeautifulSoup
 from utils import *
 
 def main():
-    #print(get_soon_matches(URLT, HEADERS))
-    print(get_last_matches(URLT, HEADERS))
+    print(get_last_matches())
+    print(get_soon_matches())
+    
+# get the matches
+def get_soon_matches():
+    # check for not schedule going inside the main matchesbox, then searching only
+    # empty-states there
+    # probably a team with no recent results would broke this, but idk
+    soup = url_soon_matches(URLT, HEADERS)
+    tables = soup.find_all('table', class_='match-table')
+    for table in tables:
+        heading = table.find_previous('h2', class_='standard-headline')
+        title = heading.get_text(strip=True).lower()
+        if 'matches' in title:
+            rows = table.find_all('tr')
+            return matches(rows)
+    return []
 
-# calls the get method of the functions
-def get_soon_matches(url, headers):
+def get_last_matches():
+    soup = url_last_matches(URLT, HEADERS)
+    tables = soup.find_all('table', class_='match-table')
+    for table in tables:
+        heading = table.find_previous('h2', class_='standard-headline')
+        title = heading.get_text(strip=True).lower()
+        if 'results' in title:
+            rows = table.find_all('tr')
+            return matches(rows)[:3]
+    return []
+
+# url functions
+def url_soon_matches(url, headers):
     url = f'{url}tab-matchesBox'
     response = requests.get(url, headers=headers).text
-    soup = BeautifulSoup(response, 'html.parser')
-    return soon_matches(soup) 
+    return BeautifulSoup(response, 'html.parser')
+ 
 
-def get_last_matches(url, headers):
+def url_last_matches(url, headers):
     url = f'{url}tab-matchesBox'
     response = requests.get(url, headers=headers).text
-    soup = BeautifulSoup(response, 'html.parser')
-    return last_matches(soup)
+    return BeautifulSoup(response, 'html.parser')
 
 def matches(rows):
     matches = []
@@ -50,7 +75,6 @@ def matches(rows):
         if score_cell != None:
             score = score_cell.split(":")
             score = f'{team} {score[0]} x {score[1]}'
-
         # catches all matches
         if all([event,date, team]):
             match = {
@@ -64,31 +88,6 @@ def matches(rows):
             event = date = team = watch = score = None 
     return matches
     
-# get the matches
-def soon_matches(soup):
-    # check for not schedule going inside the main matchesbox, then searching only
-    # empty-states there
-    # probably a team with no recent results would broke this, but idk
-    tables = soup.find_all('table', class_='match-table')
-    for table in tables:
-        heading = table.find_previous('h2', class_='standard-headline')
-        title = heading.get_text(strip=True).lower()
- 
-    if 'upcoming matches' in title:
-        rows = table.find_all('tr')
-        return matches(rows)
-    return []
-
-def last_matches(soup):
-    tables = soup.find_all('table', class_='match-table')
-    for table in tables:
-        heading = table.find_previous('h2', class_='standard-headline')
-        title = heading.get_text(strip=True).lower()
- 
-    if 'results' in title:
-        rows = table.find_all('tr')
-        return matches(rows)[:3]
-    return []
 
 if __name__ == '__main__':
     main()
