@@ -28,6 +28,9 @@ def check_response(message):
     message = message.lower()
     for word in WORDS:
         matches = [kw for kw in word["keywords"] if kw in message]
+        if word['name'] == 'despedida' and len(matches) >= 1:
+            return word['name']
+
         if len(matches) >= 2:
             return word["name"]
     return None

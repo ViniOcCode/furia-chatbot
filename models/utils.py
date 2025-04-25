@@ -34,8 +34,7 @@ WORDS = [
     "keywords": [
         "tchau", "falou", "até", "valeu", "adeus",
         "fui", "flw", "vazei", "nos vemos", "see ya", "bye",
-        "até mais", "partiu", "até logo", "abraço", "chat", "bot"
-        "gpt", "robo", "pantera", "panterinha",
+        "até mais", "partiu", "até logo", "abraço"
         ]},
 
     {"name": "about",
