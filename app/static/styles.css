@@ -1,0 +1,155 @@
+/* static/styles.css */
+.chat-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    background: #007bff;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.chat-container {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 350px;
+    height: 450px;
+    display: none; /* Inicialmente oculto */
+    flex-direction: column;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 0; /* Fix para scroll no Firefox */
+}
+
+.chat-input {
+    background: #ffffff;
+    border-top: 1px solid #e9ecef;
+}
+
+.input-group {
+    gap: 8px;
+    align-items: center;
+}
+
+/* Campo de texto moderno */
+#userInput {
+    border: 1px solid #dee2e6 !important;
+    padding: 8px 20px !important;
+    transition: all 0.3s;
+}
+
+#userInput:focus {
+    border-color: #86b7fe !important;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1) !important;
+}
+.message {
+    display: flex;
+    align-items: start;
+    gap: 10px;
+    max-width: 85%;
+    padding: 12px;
+    border-radius: 15px;
+    margin: 8px 0;
+}
+
+.message .icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.message.user {
+    background: #e3f2fd;
+    margin-left: auto;
+    flex-direction: row-reverse;
+}
+
+.message.bot {
+    background: #f1f1f1;
+    margin-right: auto;
+}
+
+.message-content {
+    flex: 1;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.icon:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s;
+}
+
+/* Botão de enviar compacto */
+.btn-primary.rounded-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.btn-primary.rounded-circle:hover {
+    transform: translateY(-1px);
+}
+
+/* ANIMAÇÃO DO BOTÃO */
+@keyframes pulse-border {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(0, 123, 255, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+    }
+}
+
+/* GARANTIR QUE A ANIMAÇÃO FUNCIONE */
+.btn-primary {
+    position: relative;
+    overflow: visible !important; /* Permite que a sombra seja visível */
+}
+
+.btn-primary.sent {
+    animation: pulse-border 0.7s;
+    z-index: 1; /* Coloca o botão acima de outros elementos */
+}
+
+/* Animação do ícone do chat */
+@keyframes pulse-notification {
+    0% { box-shadow: 0 0 0 0 rgba(255, 13, 0, 0.724); }
+    100% { box-shadow: 0 0 0 15px rgba(255, 59, 48, 0); }
+}
+
+.chat-icon.notification {
+    animation: pulse-notification 1.5s infinite;
+}

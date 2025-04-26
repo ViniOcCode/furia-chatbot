@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from utils import *
+from app.models.utils import *
 
 def main():
     print(get_last_matches())
@@ -44,6 +44,7 @@ def url_last_matches(url, headers):
     response = requests.get(url, headers=headers).text
     return BeautifulSoup(response, 'html.parser')
 
+# get all the data for matches
 def matches(rows):
     matches = []
     event = date = team = watch = score = None 
@@ -51,7 +52,7 @@ def matches(rows):
         # Get event name
         livestream = row.find('a', class_='matchpage-button') or watch
         if livestream != None:
-            watch = livestream['href']
+            watch = f'{DOMAIN}{livestream['href']}'
 
         event = extract_text(row.find('a', class_='a-reset')) or event
 

@@ -1,10 +1,10 @@
 from flask import Flask
 
 def create_app():
-    app = Flask(__name__) 
+    myapp = Flask(__name__) 
 
-    from app.controllers.chat import chatbot
-    app.register_blueprint(chatbot, url_prefix='/')
+    from app.controllers.chat import chat
+    myapp.register_blueprint(chat, url_prefix='/')
 
-    return app
+    return myapp
 
