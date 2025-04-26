@@ -75,7 +75,11 @@ def matches(rows):
         score_cell = result.get_text(strip=True) if result else None
         if score_cell != None:
             score = score_cell.split(":")
-            score = f'{team} {score[0]} x {score[1]}'
+            if score[0] < score[1]:
+                score = f'{team} {score[0]} x {score[1]} 🏆 #GOFURIA'
+            else:
+                score = f'🏆 {team} {score[0]} x {score[1]}'
+
         # catches all matches
         if all([event,date, team]):
             match = {

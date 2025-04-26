@@ -1,4 +1,7 @@
 /* static/styles.css */
+body {
+    background-color: rgba(0, 0, 0, 0.568);
+}
 .chat-icon {
     position: fixed;
     bottom: 20px;
@@ -33,16 +36,17 @@
 .chat-messages {
     flex: 1;
     overflow-y: auto;
-    padding: 15px;
+    padding: 10px 15px; 
     display: flex;
     flex-direction: column;
     gap: 10px;
-    min-height: 0; /* Fix para scroll no Firefox */
+    min-height: 0; 
 }
 
 .chat-input {
     background: #ffffff;
     border-top: 1px solid #e9ecef;
+    padding: 10px 15px !important; 
 }
 
 .input-group {
@@ -50,16 +54,18 @@
     align-items: center;
 }
 
-/* Campo de texto moderno */
 #userInput {
     border: 1px solid #dee2e6 !important;
     padding: 8px 20px !important;
     transition: all 0.3s;
+    max-width: 100% !important;
+    border-radius: 20px !important;
+    margin: 0 5px; 
 }
 
 #userInput:focus {
     border-color: #86b7fe !important;
-    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1) !important;
+    box-shadow: 0 0 0 1px rgba(13, 110, 253, 0.1) !important;
 }
 .message {
     display: flex;
@@ -92,6 +98,9 @@
 
 .message-content {
     flex: 1;
+    word-wrap: break-word;
+    max-width: calc(100% - 50px);
+    overflow: hidden; 
 }
 
 .icon {
@@ -108,18 +117,28 @@
     transition: transform 0.2s;
 }
 
-/* Botão de enviar compacto */
 .btn-primary.rounded-circle {
-    display: flex;
+    --size: 2.5rem; 
+    width: var(--size) !important;
+    height: var(--size) !important;
+    padding: 0 !important;
+    border: none !important;
+    background: #000 !important;
+    transition: all 0.3s;
+    display: flex !important;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s;
 }
 
 .btn-primary.rounded-circle:hover {
-    transform: translateY(-1px);
+    background: #333 !important;
+    transform: scale(1.05);
 }
 
+.bi-arrow-up {
+    font-size: calc(var(--size) * 0.5) !important; 
+    margin-left: 2px;
+}
 /* ANIMAÇÃO DO BOTÃO */
 @keyframes pulse-border {
     0% {
@@ -136,12 +155,12 @@
 /* GARANTIR QUE A ANIMAÇÃO FUNCIONE */
 .btn-primary {
     position: relative;
-    overflow: visible !important; /* Permite que a sombra seja visível */
+    overflow: visible !important; 
 }
 
 .btn-primary.sent {
     animation: pulse-border 0.7s;
-    z-index: 1; /* Coloca o botão acima de outros elementos */
+    z-index: 1; 
 }
 
 /* Animação do ícone do chat */

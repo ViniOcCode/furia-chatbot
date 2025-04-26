@@ -1,5 +1,6 @@
 from app.models.matches import get_soon_matches, get_last_matches
 from app.models.lineup import get_players
+from app.models.events import get_events
 from app.models.utils import WORDS, FUNFACT
 import random
 
@@ -13,8 +14,10 @@ intent_router = {
     'assistir': lambda: format_watch_response(),
     'resultados': lambda: format_lastResults_response(get_last_matches()),
     'proximo_jogo': lambda: format_match_response(get_soon_matches()),
-    'elenco': lambda: format_lineup_response(get_players())
+    'eventos': lambda: format_events_response(get_events()),
+    'elenco': lambda: format_lineup_response(get_players()),
 }
+
 
 def main():
     format_hello_response()
@@ -23,16 +26,30 @@ def match_response(message):
     intent = check_response(message)
     if intent in intent_router:
         return intent_router[intent]()
-    return 'Não entendi.'
+
+    return (
+        'Não consegui entender, foi mal!<br>'
+        'Aqui vai uma lista do que você pode me perguntar:<br>'
+        '<ul style="list-style: none; padding: 0;">'
+            '<li>🤖 Quem criou o bot</li>'
+            '<li>🎲 Curiosidade aleatória</li>'
+            '<li>🐱‍👤 Sobre a FURIA</li>'
+            '<li>📺 Onde assistir aos jogos</li>'
+            '<li>📊 Resultados recentes</li>'
+            '<li>🎯 Próximo jogo</li>'
+            '<li>📅 Próximos eventos</li>'
+            '<li>🧑‍🤝‍🧑 Elenco atual</li>'
+        '</ul>'
+    )
 
 def check_response(message):
     message = message.lower()
     for word in WORDS:
         matches = [kw for kw in word['keywords'] if kw in message]
-        if len(matches) >= 1:
-            if word['name'] == 'despedida':
+        if len(message) >= 1:
+            if word['name'] == 'despedida' and len(matches) >= 1:
                 return word['name']
-            elif word['name'] == 'cumprimento':
+            elif word['name'] == 'cumprimento' and len(matches) >= 1:
                 return word['name']
 
         if len(matches) >= 2:
@@ -83,15 +100,15 @@ def format_goobye_response():
         '🍻 Valeu pela resenha! Te espero no próximo drop.'
     ]
     return (f'{random.choice(despedidas)}<br>'
-            f'E não se esqueça!<br>'
+            f'E não se esqueça:<br>'
             f'{format_about_response()}'
         )
 
 def format_about_response():
     return ('Para saber mais da galera Furiosa, cola com a gente! 🐾<br>'
-            '#️⃣ X: https://x.com/FURIA<br>'
-            '📷 Instagram: https://www.instagram.com/furiagg/<br>'
-            '📺 Twitch: https://www.twitch.tv/furiatv<br>'
+            '#️⃣ <a href="https://x.com/FURIA" target="_blank">X</a><br>'
+            '📷 <a href="https://www.instagram.com/furiagg/" target="_blank">Instagram</a><br>'
+            '📺 <a href="https://www.twitch.tv/furiatv" target="_blank">Twitch</a><br>'
     )
 def format_funfact_response():
     kw = random.choice(list(FUNFACT.keys()))
@@ -114,7 +131,10 @@ def format_watch_response():
 
 def format_match_response(matches):
     if not matches:
-        return 'As panteras não têm um jogo recente marcado :('
+        return (
+                'As panteras não têm um jogo recente marcado :('
+                f'{format_events_response()}'
+                )
     match = matches[0]
     return (
         f'🏆 Próximo jogo da FURIA: {match["event"]}<br>'
@@ -126,19 +146,32 @@ def format_match_response(matches):
 
 def format_lastResults_response(matches):
     if not matches:
-        return 'As panteras não saíram da toca faz um tempo...'
+        return (f'As panteras não saíram da toca faz um tempo...<br>')
     
-    response = '📜 Últimos jogos da FURIA:<br>'
+    response = '📜 Últimos jogos da FURIA:<br><br>'
     for match in matches:
         response += (
             f'🏆 Evento: {match["event"]}<br>'
             f'🆚 Adversário: {match["enemy"]}<br>'
             f'📅 Data: {match["date"]}<br>'
-            f'🔢 Resultado: {match.get("score", "N/A")}'
-            f'{'-'*30}\n'
+            f'🔢 Resultado: {match.get("score", "N/A")}<br>'
+            f'{'-'*30}<br>'
         )
     return response.strip()
 
+def format_events_response(events):
+    if not events:
+        return 'As panteras parecem não ter nenhum atividade pela frente'
+
+    response = 'As próximas aparições das panteras serão em:<br><br>'
+    for event in events:
+        response += (
+            f'🕹️ {event['event']}<br>'
+            f'📆 {event['date']}<br>'
+            f'{'-'*30}<br>'
+        )
+    
+    return response.strip()
 
 def format_lineup_response(lineup):
     players = lineup.get('players', [])

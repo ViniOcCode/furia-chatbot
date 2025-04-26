@@ -6,62 +6,93 @@ URL = f'{DOMAIN}team/8297/furia#'
 URLT = f'{DOMAIN}team/12774/flyquest#'
 HEADERS = {'User-Agent': 'Mozzila/5.0'}
 
+# this could be smaller and more smart but this will work
 WORDS = [
     {"name": "madebywho", 
-    "keywords": ["feito", "por", "quem", "fez", "vinicius"
-                 "programador", "furia", "bonito", "legal", "trabalhador",
-                 "esforçado", "made", "by", "who"
-                 ]},
-
+    "keywords": [
+        "feito", "criado", "desenvolvido", "por", "quem", "fez", "vinicius",
+        "programador", "autor", "criador", "responsável", "engenheiro",
+        "construiu", "idealizador", "sabe", "de", "que", "teve", "ideia",
+        "construção", "mentor", "designer", "arquiteto","dev", "coder", 
+        "codou", "isso", "bot", "aqui", 
+    ]},
 
     {"name": "proximo_jogo", 
-    "keywords": ["quando", "proximo", "jogo", 
-                 "qual", "data", "partida", "game",
-                 "games", "jogos", "vão", "quais"]},
-                 
+    "keywords": [
+        "quando", "próximo", "jogo", "partida", "game", "data", "horário",
+        "adversário", "calendário", "agenda", "dia", "mês", "ano", "hora",
+        "confronto", "oponente", "duelo", "match", "contra", "times", "time",
+        "disputar", "jogar", "competir" 
+    ]},
+
+    {"name": "eventos",
+    "keywords": [
+        "evento", "organização", "agenda", "calendário", "datas", 
+        "horário", "participação", "campeonato", "jogos", "próximos", 
+        "competições", "torneio", "resultados", "vitórias", "derrotas", 
+        "títulos", "liga", "valve", "csgo", "cs2", "esports", "cenário", 
+        "competitivo", "campeonatos", "eventos"
+    ]},
 
     {"name": "resultados",
     "keywords": [
-        "último", "ultimos", "últimos", "jogos", "jogo", 
-        "resultados", "placar", "resultado", 
-        "aconteceu", "partidas", "aconteceram",
-        "game", "games"]},
+        "último","ultimo", "jogo", "resultados", "placar", "score", "como", 
+        "terminou","foi", "vitória", "derrota",  "resultado","final", 
+        "aconteceu", "histórico", "recente","detalhes", "resumo", 
+        "quem", "ganhou", "perdeu", "empatou", "competição", "torneio", 
+        "campeonato","partidas", "jogaram"
+    ]},
 
     {"name": "elenco", 
-    "keywords": ["quem", "joga", "elenco", "jogar", "qual", 
-                 "line", "lineup", "jogadores", "quais", "banco", 
-                 "reserva"]},
+    "keywords": [
+        "quem", "joga", "jogadores", "time", "equipe", "titulares", "reservas",
+        "lineup", "formação", "escalação", "membros", "integrantes", "nomes",
+        "lista", "convocados", "presentes", "participantes", "atuais",
+        "atletas", "seleção", "grupo"
+    ]},
 
     {"name": "assistir", 
-    "keywords": ["onde", "assistir", "posso", "tem", "lugar",
-                 "stream", "live", "ao vivo", "oficial", "canal",
-                 "transmissão", "jogo", "game", "partida"]},
+    "keywords": [
+        "onde", "assistir", "ver", "transmissão", "stream", "live", "vivo",
+        "canal", "plataforma", "aovivo", "online", "tv", "emissora", "site",
+        "link", "grátis", "pago", "youtube", "twitch", "app", "serviço",
+        "acessar", "encontrar", "encontro", "achar", "procurar"
+    ]},
 
     {"name": "despedida",
     "keywords": [
-        "tchau", "falou", "até", "valeu", "adeus",
-        "fui", "flw", "vazei", "nos vemos", "see ya", "bye",
-        "até mais", "partiu", "até logo", "abraço"
-        ]},
+        "tchau", "falou", "até", "adeus", "flw", "vou", "vazei", "bye", "logo",
+        "breve", "mais", "depois", "inté", "partiu", "fui", "nessa", "xau", "valeu",
+        "obrigado", "obrigada", "nos", "vemos", "próxima", "tarde", "sair", "eu",
+        "você", "já", "era", "fora", "cansei", "chega", "basta", "parar", "agora",
+        "ok", "tudo", "bem", "então", "né", "vamos", "combinado", "depois"
+    ]},
 
     {"name": "cumprimento",
     "keywords": [
-        "eae", "oi", "salve", "olá",
-        "tudo bem", "de boa", "como vai",
-        ]},
+        "oi", "olá", "eae", "salve", "fala", "bom", "dia", "boa", "tarde", "noite",
+        "tudo", "bem", "vai", "tranquilo", "boa", "suave", "está",
+        "estou", "você", "aí", "coé", "hey", "hello", "hi", "certo", "jóia",
+        "beleza", "tá", "ce", "tá", "em", "cima", "tranquilo", "tudo", "joia"
+    ]},
 
     {"name": "about",
     "keywords": [
-            "instagram", "twitter", "x", "tiktok", "redes", "sociais",
-            "furia no insta", "furia no twitter", "furia no x",
-            "furia nas redes", "onde seguir", "link da rede",
-            "conta oficial", "canal da furia", "conta da furia",
-            "social", "perfil", "perfil oficial"]},
+        "instagram", "twitter", "x", "tiktok", "redes", "sociais", "facebook",
+        "youtube", "linkedin", "discord", "perfil", "conta", "seguir", "seguidores",
+        "oficial", "link", "url", "handle", "@", "hashtag", "post", "feed", "stories",
+        "vídeos", "fotos", "mídia", "digital", "online", "encontrar",
+        "achar", "procurar", "acessar", "ver", "saber", "sobre", 
+         "contato", "canal", "site", "aplicativo", "app", "web"
+    ]},
 
- {"name": "funfact",
-    "keywords": ["curiosidade", "me", "da", "dá",
-                 "uma", "alguma", "quero", "funfact"
-                 "curioso", "fato"]}
+    {"name": "funfact",
+    "keywords": [
+        "curiosidade", "fato", "interessante", "engraçado", "incrível", "sabia",
+        "que", "você", "sabia", "me", "conta", "diga", "algo", "conte", "revelação",
+        "segredo", "história", "anecdota", "trivia", "informação", "dado", "raro",
+        "inexplicável", "surpreendente", "maneiro", "legal", "show", "uau", "como"
+    ]}
 ]
 
 FUNFACT = {
@@ -87,10 +118,29 @@ def extract_text(row):
 
 # formatting date
 def date_format(timestamp):
-    timestamp_ms = int(timestamp)
-    timestamp = timestamp_ms // 1000
-    dt_utc = datetime.fromtimestamp(timestamp, tz=timezone.utc)
+    """Formata timestamps UNIX para o formato '<dia> às <horário>'"""
+    timestamp = int(timestamp)
+    # data-unix form hltv comes in ms
+    dt_utc = datetime.fromtimestamp(timestamp / 1000 , tz=timezone.utc)
 
     dt_br = dt_utc.astimezone(ZoneInfo("America/Sao_Paulo"))
     
     return dt_br.strftime("%d/%m às %Hh")
+
+def format_unix_dates(start_unix, end_unix):
+    """Formata timestamps UNIX para o formato 'dos dias <data1> até <data2>'"""
+    tz = ZoneInfo("America/Sao_Paulo")  
+
+    meses = [
+        "janeiro", "fevereiro", "março", "abril", "maio", "junho",
+        "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
+    ]
+
+    # data-unix form hltv comes in ms
+    start_dt = datetime.fromtimestamp(start_unix / 1000, tz=tz)
+    end_dt = datetime.fromtimestamp(end_unix / 1000, tz=tz)
+    
+    start_str = f"{start_dt.day} de {meses[start_dt.month - 1]}"
+    end_str = f"{end_dt.day} de {meses[end_dt.month - 1]}"
+    
+    return f"dos dias {start_str} até {end_str}"
