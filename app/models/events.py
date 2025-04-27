@@ -6,8 +6,8 @@ def main():
     print(get_events())
 
 # gets players
-def get_events():
-    soup = url_events(URLT, HEADERS)
+def get_events(url):
+    soup = url_events(url, HEADERS)
     return events(soup)
 
 def url_events(url, headers):

@@ -3,30 +3,30 @@ from bs4 import BeautifulSoup
 from app.models.utils import *
 
 def main():
-    print(get_last_matches())
-    print(get_soon_matches())
+    get_soon_matches(TEAMS['main']['url'])
+    get_last_matches(TEAMS['female']['url'])
     
 # get the matches
-def get_soon_matches():
+def get_soon_matches(url):
     # check for not schedule going inside the main matchesbox, then searching only
     # empty-states there
     # probably a team with no recent results would broke this, but idk
-    soup = url_soon_matches(URLT, HEADERS)
+    soup = url_soon_matches(url, HEADERS)
     tables = soup.find_all('table', class_='match-table')
     for table in tables:
         heading = table.find_previous('h2', class_='standard-headline')
-        title = heading.get_text(strip=True).lower()
+        title = extract_text(heading).lower()
         if 'matches' in title:
             rows = table.find_all('tr')
             return matches(rows)
     return []
 
-def get_last_matches():
-    soup = url_last_matches(URLT, HEADERS)
+def get_last_matches(url):
+    soup = url_last_matches(url, HEADERS)
     tables = soup.find_all('table', class_='match-table')
     for table in tables:
         heading = table.find_previous('h2', class_='standard-headline')
-        title = heading.get_text(strip=True).lower()
+        title = extract_text(heading).lower()
         if 'results' in title:
             rows = table.find_all('tr')
             return matches(rows)[:3]
@@ -47,50 +47,57 @@ def url_last_matches(url, headers):
 # get all the data for matches
 def matches(rows):
     matches = []
-    event = date = team = watch = score = None 
+    current_event = None
+
     for row in rows:
-        # Get event name
-        livestream = row.find('a', class_='matchpage-button') or watch
-        if livestream != None:
-            watch = f'{DOMAIN}{livestream['href']}'
 
-        event = extract_text(row.find('a', class_='a-reset')) or event
+        if 'event-header-cell' in row.get('class', []):
+            event = row.find('a', class_='a-reset')
+            if event:
+                current_event = extract_text(event)
+            continue
 
-        # Get matches date
-        date = row.find('td', class_='date-cell')
-        if date != None:
-            date_unix = date.find('span')
-            date = date_format(date_unix['data-unix'])
-            
-
-        # Check for TBD matches
-        TBD = row.find('span', class_='team-2')
-        if TBD != None:
-            team = 'A definir' # this span is whenever got a TBD match
-        else:
-            team = extract_text(row.find('a', class_='team-2')) or team 
-            # this a is when they have a defined team to play
-
-        result = row.find('div', class_='score-cell')
-        score_cell = result.get_text(strip=True) if result else None
-        if score_cell != None:
-            score = score_cell.split(":")
-            if score[0] < score[1]:
-                score = f'{team} {score[0]} x {score[1]} 🏆 #GOFURIA'
-            else:
-                score = f'🏆 {team} {score[0]} x {score[1]}'
-
-        # catches all matches
-        if all([event,date, team]):
+        if 'team-row' in row.get('class', []):
             match = {
-                'event': event,
-                'date': date,
-                'enemy': team,
-                'livestreams': watch,
-                'score': score
+                'event': current_event,
+                'date': None,
+                'enemy': None,
+                'livestreams': None,
+                'score': None,
             }
-            matches.append(match)
-            event = date = team = watch = score = None 
+
+            # Get hltv streams
+            livestream = row.find('a', class_='matchpage-button') or row.find('a', class_='stats-button')
+            if livestream != None:
+                match['livestreams'] = f'{DOMAIN}{livestream['href']}'
+
+            # Get matches date
+            date = row.find('td', class_='date-cell')
+            if date:
+                date_unix = date.find('span', {'data-unix': True})
+                if date_unix:
+                    match['date'] = date_format(date_unix['data-unix'])
+
+
+            # Check for matches 
+            # <a> seems to be defined matches
+            # <span> seems to be for undefined matches
+            team = row.find('a', class_='team-2') or row.find('span', class_='team-2')
+            if team:
+                match['enemy'] = team.get_text(strip=True) if 'team-2' in team.get('class', []) else 'A definir'
+                print(match['enemy'])
+
+            score_cell = row.find('div', class_='score-cell')
+            if score_cell:
+                score = score_cell.get_text(strip=True).split(":")
+                if score[0] > score[1]:
+                    match['score']= f" #GOFURIA {score[0]}x{score[1]} <a href='{DOMAIN}{team['href']}' target='_blank'>{match['enemy']}</a>"
+                else:
+                    match['score']= f"{score[0]}x{score[1]} <a href='{DOMAIN}{team['href']}' target='_blank'>{match['enemy']}</a>"
+
+            # catches all matches
+            if match['date'] and match['enemy']:
+                matches.append(match)
     return matches
     
 

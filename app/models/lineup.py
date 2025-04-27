@@ -6,8 +6,8 @@ def main():
     print(get_players())
 
 # gets players
-def get_players():
-    soup = url_players(URLT, HEADERS)
+def get_players(url):
+    soup = url_players(url, HEADERS)
     return players(soup)
 
 def url_players(url, headers):
@@ -23,10 +23,11 @@ def players(soup):
     }
 
     # Get coach
-    coach_row = soup.find('table', class_='coach-table').find('div', class_='text-ellipsis')
-    coach = extract_text(coach_row)
-    if coach:
-        lineup['coach'] = coach
+    coach_row = soup.find('table', class_='coach-table')
+    if coach_row != None:
+        coach = extract_text(coach_row.find('div', class_='text-ellipsis'))
+        if coach:
+            lineup['coach'] = coach if coach else 'Desconhecido'
 
     table = soup.find('table', class_='players-table')
     rows = table.find_all('tr')

@@ -2,99 +2,124 @@ from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
 DOMAIN = 'https://www.hltv.org/'
-URL = f'{DOMAIN}team/8297/furia#' 
-URLT = f'{DOMAIN}team/12774/flyquest#'
 HEADERS = {'User-Agent': 'Mozzila/5.0'}
 
-# this could be smaller and more smart but this will work
+TEAMS = {
+    'main': {
+        'name': 'FURIA',
+        'url': f'{DOMAIN}team/8297/furia#',
+        'keywords': [
+            'csgo', 'cs2', 'masculino', 'principal', 'main', 'primary',
+            'masculina', 'equipe', 'time', 'squad', 'lineup', 'roster',
+            'tropa', 'elenco', 'formação', 'escalação', 'plantel', 'núcleo'
+        ]
+    },
+    'female': {
+        'name': 'FURIA Fe',
+        'url': f'{DOMAIN}team/10976/furia-fe#',
+        'keywords': [
+            'feminino', 'female', 'fe', 'women', 'girls', 'meninas',
+            'feminina', 'equipe', 'time', 'squad', 'roster', 'lineup',
+            'tropa', 'panteras', 'garotas', 'esquadrão', 'núcleo'
+        ]
+    }
+}
+
 WORDS = [
-    {"name": "madebywho", 
-    "keywords": [
-        "feito", "criado", "desenvolvido", "por", "quem", "fez", "vinicius",
-        "programador", "autor", "criador", "responsável", "engenheiro",
-        "construiu", "idealizador", "sabe", "de", "que", "teve", "ideia",
-        "construção", "mentor", "designer", "arquiteto","dev", "coder", 
-        "codou", "isso", "bot", "aqui", 
-    ]},
-
-    {"name": "proximo_jogo", 
-    "keywords": [
-        "quando", "próximo", "jogo", "partida", "game", "data", "horário",
-        "adversário", "calendário", "agenda", "dia", "mês", "ano", "hora",
-        "confronto", "oponente", "duelo", "match", "contra", "times", "time",
-        "disputar", "jogar", "competir" 
-    ]},
-
-    {"name": "eventos",
-    "keywords": [
-        "evento", "organização", "agenda", "calendário", "datas", 
-        "horário", "participação", "campeonato", "jogos", "próximos", 
-        "competições", "torneio", "resultados", "vitórias", "derrotas", 
-        "títulos", "liga", "valve", "csgo", "cs2", "esports", "cenário", 
-        "competitivo", "campeonatos", "eventos"
-    ]},
-
-    {"name": "resultados",
-    "keywords": [
-        "último","ultimo", "jogo", "resultados", "placar", "score", "como", 
-        "terminou","foi", "vitória", "derrota",  "resultado","final", 
-        "aconteceu", "histórico", "recente","detalhes", "resumo", 
-        "quem", "ganhou", "perdeu", "empatou", "competição", "torneio", 
-        "campeonato","partidas", "jogaram"
-    ]},
-
-    {"name": "elenco", 
-    "keywords": [
-        "quem", "joga", "jogadores", "time", "equipe", "titulares", "reservas",
-        "lineup", "formação", "escalação", "membros", "integrantes", "nomes",
-        "lista", "convocados", "presentes", "participantes", "atuais",
-        "atletas", "seleção", "grupo"
-    ]},
-
-    {"name": "assistir", 
-    "keywords": [
-        "onde", "assistir", "ver", "transmissão", "stream", "live", "vivo",
-        "canal", "plataforma", "aovivo", "online", "tv", "emissora", "site",
-        "link", "grátis", "pago", "youtube", "twitch", "app", "serviço",
-        "acessar", "encontrar", "encontro", "achar", "procurar"
-    ]},
-
-    {"name": "despedida",
-    "keywords": [
-        "tchau", "falou", "até", "adeus", "flw", "vou", "vazei", "bye", "logo",
-        "breve", "mais", "depois", "inté", "partiu", "fui", "nessa", "xau", "valeu",
-        "obrigado", "obrigada", "nos", "vemos", "próxima", "tarde", "sair", "eu",
-        "você", "já", "era", "fora", "cansei", "chega", "basta", "parar", "agora",
-        "ok", "tudo", "bem", "então", "né", "vamos", "combinado", "depois"
-    ]},
-
-    {"name": "cumprimento",
-    "keywords": [
-        "oi", "olá", "eae", "salve", "fala", "bom", "dia", "boa", "tarde", "noite",
-        "tudo", "bem", "vai", "tranquilo", "boa", "suave", "está",
-        "estou", "você", "aí", "coé", "hey", "hello", "hi", "certo", "jóia",
-        "beleza", "tá", "ce", "tá", "em", "cima", "tranquilo", "tudo", "joia"
-    ]},
-
-    {"name": "about",
-    "keywords": [
-        "instagram", "twitter", "x", "tiktok", "redes", "sociais", "facebook",
-        "youtube", "linkedin", "discord", "perfil", "conta", "seguir", "seguidores",
-        "oficial", "link", "url", "handle", "@", "hashtag", "post", "feed", "stories",
-        "vídeos", "fotos", "mídia", "digital", "online", "encontrar",
-        "achar", "procurar", "acessar", "ver", "saber", "sobre", 
-         "contato", "canal", "site", "aplicativo", "app", "web"
-    ]},
-
-    {"name": "funfact",
-    "keywords": [
-        "curiosidade", "fato", "interessante", "engraçado", "incrível", "sabia",
-        "que", "você", "sabia", "me", "conta", "diga", "algo", "conte", "revelação",
-        "segredo", "história", "anecdota", "trivia", "informação", "dado", "raro",
-        "inexplicável", "surpreendente", "maneiro", "legal", "show", "uau", "como"
-    ]}
+    {   
+        'name': 'madebywho', 
+        'keywords': 
+        [
+            'criador', 'dev', 'vinicius', 'autor', 'desenvolvedor',
+            'coder', 'engenheiro', 'construiu', 'idealizador', 'pai',
+            'mentor', 'arquiteto', 'designer', 'responsável', 'cérebro',
+            'bot', 'criou', 'fez', 'programou', 'construção'
+        ]
+    },
+    {   'name': 'proximo_jogo', 
+        'keywords': [
+            'próximo', 'jogo', 'partida', 'match', 'confronto',
+            'duelo', 'encontro', 'disputa', 'pega', 'jogão',
+            'calendário', 'agenda', 'data', 'horário', 'quando',
+            'próxima', 'schedule', 'fixture', 'opponent', 'adversário','jogos'
+        ]
+    },
+    {   'name': 'eventos',
+        'keywords': [
+            'evento', 'campeonato', 'torneio', 'major', 'qualifier',
+            'playoffs', 'final', 'etapa', 'fase', 'circuito',
+            'liga', 'copa', 'championship', 'qualify', 'eliminatórias',
+            'grupos', 'mata-mata', 'md3', 'bo3', 'md1', 'bo1'
+        ]
+    },
+    {   'name': 'resultados',
+        'keywords': [
+            'resultado', 'placar', 'score', 'vitória', 'derrota',
+            'empate', 'ganhou', 'perdeu', 'venceu', 'perdeu',
+            'histórico', 'recente', 'último', 'desfecho', 'resumo',
+            'detalhes', 'performance', 'stats', 'estatísticas', 'rounds','ultimo'
+        ]
+    },
+    {   'name': 'elenco', 
+        'keywords': [
+            'jogadores', 'players', 'lineup', 'roster', 'equipe',
+            'time', 'titulares', 'reservas', 'banco', 'subs',
+            'formação', 'escalação', 'membros', 'nomes', 'nick',
+            'player', 'atletas', 'seleção', 'grupo', 'call'
+        ]
+    },
+    {   'name': 'assistir', 
+        'keywords': [
+            'assistir', 'ver', 'live', 'stream', 'twitch',
+            'youtube', 'transmissão', 'aovivo', 'onde', 'link',
+            'canal', 'plataforma', 'narração', 'cast', 'cobertura',
+            'hl', 'tv', 'broadcast', 'watch', 'espectador'
+        ]
+    },
+    {   'name': 'despedida',
+        'keywords': [
+            'tchau', 'adeus', 'flw', 'bye', 'vou',
+            'até', 'logo', 'mais', 'falou', 'partiu',
+            'fui', 'xau', 'valeu', 'obrigado', 'obrigada',
+            'abração', 'tmj', 'vamos', 'combina', 'depois'
+        ]
+    },
+    {   'name': 'cumprimento',
+        'keywords': [
+            'oi', 'olá', 'eae', 'salve', 'fala',
+            'bom', 'dia', 'tarde', 'noite', 'beleza',
+            'suave', 'coé', 'opa', 'hello', 'hi',
+            'tudo', 'bem', 'como', 'vai', 'firme'
+        ]
+    },
+    {   'name': 'about',
+        'keywords': [
+            'redes', 'sociais', 'instagram', 'twitter', 'x',
+            'tiktok', 'youtube', 'facebook', 'discord', 'site',
+            'aplicativo', 'app', 'web', 'contato', 'link',
+            'perfil', 'hashtag', 'seguir', 'oficial', 'info'
+        ]
+    },
+    {   'name': 'funfact',
+        'keywords': [
+            'curiosidade', 'fato', 'dado', 'trivia', 'sabia',
+            'interessante', 'engraçado', 'incrível', 'maneiro',
+            'uau', 'surpreendente', 'revelação', 'segredo', 'info',
+            'história', 'anecdota', 'conte', 'revela', 'chocante'
+        ]
+    },
+    {   'name': 'ranking',
+        'keywords': 
+        [
+            'posição', 'lugar', 'colocação', 'posto', 'ranking',
+            'classificação', 'número', 'top', 'topzera', 'patente',
+            'nível', 'categoria', 'divisão', 'chaveamento', 'seed',
+            'cabeça de chave', 'tier', 'grupo', 'faixa', 'patamar',
+            'brasil', 'mundo', 'mundial', 'mundialmente', 'brasileiro,'
+            'local', 'nacional'
+        ]
+    }
 ]
-
 FUNFACT = {
     "sabia": [
         "A FURIA já participou de mais de 550 partidas desde sua estreia em 2018, mantendo uma taxa de vitória de aproximadamente 60%.",
