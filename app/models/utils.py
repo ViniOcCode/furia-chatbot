@@ -9,9 +9,8 @@ TEAMS = {
         'name': 'FURIA',
         'url': f'{DOMAIN}team/8297/furia#',
         'keywords': [
-            'csgo', 'cs2', 'masculino', 'principal', 'main', 'primary',
-            'masculina', 'equipe', 'time', 'squad', 'lineup', 'roster',
-            'tropa', 'elenco', 'formação', 'escalação', 'plantel', 'núcleo'
+            'masculino', 'principal', 'main', 'primary',
+            'masculina', 'meninos', 'garotos', 'boys',
         ]
     },
     'female': {
@@ -19,8 +18,7 @@ TEAMS = {
         'url': f'{DOMAIN}team/10976/furia-fe#',
         'keywords': [
             'feminino', 'female', 'fe', 'women', 'girls', 'meninas',
-            'feminina', 'equipe', 'time', 'squad', 'roster', 'lineup',
-            'tropa', 'panteras', 'garotas', 'esquadrão', 'núcleo'
+            'feminina','squad','panteras', 'garotas', 
         ]
     }
 }
@@ -41,7 +39,7 @@ WORDS = [
             'próximo', 'jogo', 'partida', 'match', 'confronto',
             'duelo', 'encontro', 'disputa', 'pega', 'jogão',
             'calendário', 'agenda', 'data', 'horário', 'quando',
-            'próxima', 'schedule', 'fixture', 'opponent', 'adversário','jogos'
+            'próxima', 'schedule', 'fixture', 'opponent', 'adversário'
         ]
     },
     {   'name': 'eventos',
@@ -65,7 +63,7 @@ WORDS = [
             'jogadores', 'players', 'lineup', 'roster', 'equipe',
             'time', 'titulares', 'reservas', 'banco', 'subs',
             'formação', 'escalação', 'membros', 'nomes', 'nick',
-            'player', 'atletas', 'seleção', 'grupo', 'call'
+            'player', 'atletas', 'seleção', 'grupo', 'call', 'elenco', 'atual'
         ]
     },
     {   'name': 'assistir', 
@@ -73,7 +71,7 @@ WORDS = [
             'assistir', 'ver', 'live', 'stream', 'twitch',
             'youtube', 'transmissão', 'aovivo', 'onde', 'link',
             'canal', 'plataforma', 'narração', 'cast', 'cobertura',
-            'hl', 'tv', 'broadcast', 'watch', 'espectador'
+            'hl', 'tv', 'broadcast', 'watch', 'espectador', 'jogos'
         ]
     },
     {   'name': 'despedida',
@@ -97,7 +95,7 @@ WORDS = [
             'redes', 'sociais', 'instagram', 'twitter', 'x',
             'tiktok', 'youtube', 'facebook', 'discord', 'site',
             'aplicativo', 'app', 'web', 'contato', 'link',
-            'perfil', 'hashtag', 'seguir', 'oficial', 'info'
+            'perfil', 'hashtag', 'seguir', 'oficial', 'info','sobre'
         ]
     },
     {   'name': 'funfact',

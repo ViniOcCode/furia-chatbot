@@ -52,7 +52,7 @@ def default_response():
             '<li>🤖 Quem criou o bot</li>'
             '<li>🎲 Curiosidade aleatória</li>'
             '<li>🐱‍👤 Sobre a FURIA</li>'
-            '<li>📺 Onde assistir aos jogos</li>'
+            '<li>📺 Onde assistir as transmissões?</li>'
             f'<li>📊 Resultados recentes ({TEAMS["main"]["name"]} ou {TEAMS["female"]["name"]})</li>'
             f'<li>🥇 Ranqueamento global e nacional({TEAMS["main"]["name"]} ou {TEAMS["female"]["name"]})</li>'
             f'<li>🎯 Próximo jogo ({TEAMS["main"]["name"]} ou {TEAMS["female"]["name"]})</li>'
@@ -162,7 +162,7 @@ def format_match_response(matches, team_name):
         return (
                 f'As panteras da {team_name} não têm um jogo recente marcado 😔<br><br>'
                 f'Mas vale dar uma conferida nos eventos que estão por vir, que tal? 🔎<br>'
-                f'🔮 Me pergunta ai: "quais eventos estão por vir para o {team_name}?"'
+                f'🔮 Me pergunta ai: "quais eventos estão por vir para a {team_name}?"'
                 )
     match = matches[0]
     return (
@@ -194,7 +194,7 @@ def format_events_response(events, team_name):
     if not events:
         return f'As panteras da {team_name}parecem não ter nenhum atividade pela frente'
 
-    response = 'As próximas aparições das panteras serão em:<br><br>'
+    response = f'As próximas aparições das panteras da {team_name} serão em:<br><br>'
     for event in events:
         response += (
             f'🕹️ {event['event']}<br>'
