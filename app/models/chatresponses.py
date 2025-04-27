@@ -3,7 +3,35 @@ from app.models.lineup import get_players
 from app.models.events import get_events
 from app.models.ranking import get_ranking
 from app.models.utils import WORDS, FUNFACT, TEAMS
+from rapidfuzz import fuzz, process
 import random
+import re, unidecode
+
+_kw_to_intent = {}
+for intent in WORDS:
+    for kw in intent['keywords']: # padronize keywords
+        norm = unidecode.unidecode(kw.lower())
+        _kw_to_intent[norm] = intent['name']
+
+def _preprocess(text):
+    # cleans the user message to lowering it and 
+    # removing accents from words
+    t = text.lower()
+    t = unidecode.unidecode(t)
+    t = re.sub(r'[^a-z0-9\s]', ' ', t)
+    return re.sub(r'\s+', ' ', t).strip()
+
+def match_intent(message, score_cutoff=65):
+    # compare if message is similar to keywords
+    clean = _preprocess(message)
+    best_kw, score, _ = process.extractOne(
+        clean,
+        list(_kw_to_intent.keys()),
+        scorer=fuzz.token_set_ratio
+    )
+    if score >= score_cutoff:
+        return _kw_to_intent[best_kw]
+    return None
 
 # if the check for words is equal one of this, lambda formates the response
 intent_router = {
@@ -61,24 +89,7 @@ def default_response():
         '</ul>'
     )
 def check_response(message):
-    message = message.lower()
-    
-    # Ordem de prioridade dos intents
-    priority_order = [
-        'despedida', 'cumprimento',  # checks if bye or hello
-        'proximo_jogo', 'resultados', # majors intents
-        'ranking', 'elenco', 'eventos', 
-        'assistir', 'about',
-        'funfact', 'madebywho'       # less priority
-    ]
-    
-    # checks priority order
-    for intent_name in priority_order:
-        word = next(w for w in WORDS if w['name'] == intent_name)
-        if any(kw in message for kw in word['keywords']):
-            return intent_name
-    
-    return None
+ return match_intent(message, score_cutoff=65)
 
 def madebywho():
     return (

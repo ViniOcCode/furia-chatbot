@@ -24,7 +24,7 @@ def url_world_ranking(url, headers):
     """Define the url for BeautifulSoup using request
 
     Args:
-        url (str): Build the url using the hltv's team page 
+        url (str): Build the url using the hltvs team page 
         headers (str): Headers for HTTP requests
 
     Returns:
@@ -37,7 +37,7 @@ def url_regional_ranking():
     """Define the url for BeautifulSoup using request
 
     Args:
-        url (str): Build the url using the hltv's leaderboard page 
+        url (str): Build the url using the hltvs leaderboard page 
         headers (str): Headers for HTTP requests
 
     Returns:
@@ -49,7 +49,7 @@ def url_regional_ranking():
 
 # search for players
 def ranking(soup, team_name):
-    """Webscrap hltv's events tab to get soon events
+    """Webscrap hltvs events tab to get soon events
 
     Args:
         soup (Class): BeautifulSoup Object getting website data

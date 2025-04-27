@@ -47,7 +47,7 @@ WORDS = [
             'evento', 'campeonato', 'torneio', 'major', 'qualifier',
             'playoffs', 'final', 'etapa', 'fase', 'circuito',
             'liga', 'copa', 'championship', 'qualify', 'eliminatórias',
-            'grupos', 'mata-mata', 'md3', 'bo3', 'md1', 'bo1'
+            'grupos', 'mata-mata', 'md3', 'bo3', 'md1', 'bo1', 'eventos'
         ]
     },
     {   'name': 'resultados',
@@ -77,7 +77,7 @@ WORDS = [
     {   'name': 'despedida',
         'keywords': [
             'tchau', 'adeus', 'flw', 'bye', 'vou',
-            'até', 'logo', 'mais', 'falou', 'partiu',
+            'até', 'logo', 'falou', 'partiu',
             'fui', 'xau', 'valeu', 'obrigado', 'obrigada',
             'abração', 'tmj', 'vamos', 'combina', 'depois'
         ]

@@ -11,15 +11,15 @@ def get_soon_matches(url):
     """Gets the soon matches
 
     Args:
-        url (str): Recieves an hltv's url to get matches tab from requested team in hltv
+        url (str): Recieves an hltvs url to get matches tab from requested team in hltv
 
     Returns:
         dict: Returns a dict with 2 keys: 
-            - event (str): Event's name
-            - date (str): Event's date
-            - enemy (str): Enemy's team name
-            - livestream (str): Hltv's streams
-            - score (str): Match's result
+            - event (str): Events name
+            - date (str): Events date
+            - enemy (str): Enemys team name
+            - livestream (str): Hltvs streams
+            - score (str): Matchs result
     """
     # check for not schedule going inside the main matchesbox, then searching only
     # empty-states there
@@ -42,11 +42,11 @@ def get_last_matches(url):
 
     Returns:
         dict: Returns a dict with 2 keys: 
-            - event (str): Event's name
-            - date (str): Event's date
-            - enemy (str): Enemy's team name
-            - livestream (str): Hltv's streams
-            - score (str): Match's result
+            - event (str): Events name
+            - date (str): Events date
+            - enemy (str): Enemys team name
+            - livestream (str): Hltvs streams
+            - score (str): Matchs result
     """
     soup = url_last_matches(url, HEADERS)
     tables = soup.find_all('table', class_='match-table')
@@ -63,7 +63,7 @@ def url_soon_matches(url, headers):
     """Define the url for BeautifulSoup using request
 
     Args:
-        url (str): Build the url using the hltv's matches tab
+        url (str): Build the url using the hltvs matches tab
         headers (str): Headers for HTTP requests
 
     Returns:
@@ -78,7 +78,7 @@ def url_last_matches(url, headers):
     """Define the url for BeautifulSoup using request
 
     Args:
-        url (str): Build the url using the hltv's matches tab
+        url (str): Build the url using the hltvs matches tab
         headers (str): Headers for HTTP requests
 
     Returns:
@@ -90,7 +90,7 @@ def url_last_matches(url, headers):
 
 # get all the data for matches
 def matches(rows):
-    """Webscrap hltv's matches tab to get all related data
+    """Webscrap hltvs matches tab to get all related data
 
     Args:
         soup (Class): BeautifulSoup Object getting website data

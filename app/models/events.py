@@ -10,12 +10,12 @@ def get_events(url):
     """Gets the name of events in events tab in hltv
 
     Args:
-        url (str): Recieves an hltv's url to get events tab from requested team in hltv
+        url (str): Recieves an hltvs url to get events tab from requested team in hltv
 
     Returns:
         dict: Returns a dict with 2 keys: 
-            - event (str): Event's name
-            - date (str): Event's date
+            - event (str): Events name
+            - date (str): Events date
     """
     soup = url_events(url, HEADERS)
     return events(soup)
@@ -24,7 +24,7 @@ def url_events(url, headers):
     """Define the url for BeautifulSoup using request
 
     Args:
-        url (str): Build the url using the hltv's events tab
+        url (str): Build the url using the hltvs events tab
         headers (str): Headers for HTTP requests
 
     Returns:
@@ -36,7 +36,7 @@ def url_events(url, headers):
 
 # search for players
 def events(soup):
-    """Webscrap hltv's events tab to get soon events
+    """Webscrap hltvs events tab to get soon events
 
     Args:
         soup (Class): BeautifulSoup Object getting website data

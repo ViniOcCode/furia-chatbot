@@ -7,15 +7,15 @@ def main():
 
 # gets players
 def get_players(url):
-    """Gets the requested team's lineup
+    """Gets the requested teams lineup
 
     Args:
-        url (str): Recieves an hltv's url to team's lineup
+        url (str): Recieves an hltvs url to teams lineup
 
     Returns:
         dict: Returns a dict with 2 keys: 
-            - players (list): Player's name
-            - coach (str): Team's coach
+            - players (list): Players name
+            - coach (str): Teams coach
     """
     soup = url_players(url, HEADERS)
     return players(soup)
@@ -24,7 +24,7 @@ def url_players(url, headers):
     """Define the url for BeautifulSoup using request
 
     Args:
-        url (str): Build the url using the hltv's roster box
+        url (str): Build the url using the hltvs roster box
         headers (str): Headers for HTTP requests
 
     Returns:
@@ -36,7 +36,7 @@ def url_players(url, headers):
 
 # search for players
 def players(soup):
-    """Webscrap hltv's roster box tab to entire lineup if possible 
+    """Webscrap hltvs roster box tab to entire lineup if possible 
 
     Args:
         soup (Class): BeautifulSoup Object getting website data
