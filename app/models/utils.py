@@ -143,7 +143,7 @@ def extract_text(row):
 
 # formatting date
 def date_format(timestamp):
-    """Formata timestamps UNIX para o formato '<dia> às <horário>'"""
+    """formats timestamps UNIX to format'<dia> às <horário>'"""
     timestamp = int(timestamp)
     # data-unix form hltv comes in ms
     dt_utc = datetime.fromtimestamp(timestamp / 1000 , tz=timezone.utc)
@@ -153,7 +153,7 @@ def date_format(timestamp):
     return dt_br.strftime("%d/%m às %Hh")
 
 def format_unix_dates(start_unix, end_unix):
-    """Formata timestamps UNIX para o formato 'dos dias <data1> até <data2>'"""
+    """formats timestamps UNIX to format 'dos dias <data1> até <data2>'"""
     tz = ZoneInfo("America/Sao_Paulo")  
 
     meses = [

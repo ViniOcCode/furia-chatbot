@@ -8,6 +8,19 @@ def main():
     
 # get the matches
 def get_soon_matches(url):
+    """Gets the soon matches
+
+    Args:
+        url (str): Recieves an hltv's url to get matches tab from requested team in hltv
+
+    Returns:
+        dict: Returns a dict with 2 keys: 
+            - event (str): Event's name
+            - date (str): Event's date
+            - enemy (str): Enemy's team name
+            - livestream (str): Hltv's streams
+            - score (str): Match's result
+    """
     # check for not schedule going inside the main matchesbox, then searching only
     # empty-states there
     # probably a team with no recent results would broke this, but idk
@@ -22,6 +35,19 @@ def get_soon_matches(url):
     return []
 
 def get_last_matches(url):
+    """Gets the last 3 matches
+
+    Args:
+        url (str): Recieves an hltv's url to get matches tab from requested team in hltv
+
+    Returns:
+        dict: Returns a dict with 2 keys: 
+            - event (str): Event's name
+            - date (str): Event's date
+            - enemy (str): Enemy's team name
+            - livestream (str): Hltv's streams
+            - score (str): Match's result
+    """
     soup = url_last_matches(url, HEADERS)
     tables = soup.find_all('table', class_='match-table')
     for table in tables:
@@ -34,18 +60,44 @@ def get_last_matches(url):
 
 # url functions
 def url_soon_matches(url, headers):
+    """Define the url for BeautifulSoup using request
+
+    Args:
+        url (str): Build the url using the hltv's matches tab
+        headers (str): Headers for HTTP requests
+
+    Returns:
+        Class: BeautifulSoup Object with parsed html
+    """
     url = f'{url}tab-matchesBox'
     response = requests.get(url, headers=headers).text
     return BeautifulSoup(response, 'html.parser')
  
 
 def url_last_matches(url, headers):
+    """Define the url for BeautifulSoup using request
+
+    Args:
+        url (str): Build the url using the hltv's matches tab
+        headers (str): Headers for HTTP requests
+
+    Returns:
+        Class: BeautifulSoup Object with parsed html
+    """
     url = f'{url}tab-matchesBox'
     response = requests.get(url, headers=headers).text
     return BeautifulSoup(response, 'html.parser')
 
 # get all the data for matches
 def matches(rows):
+    """Webscrap hltv's matches tab to get all related data
+
+    Args:
+        soup (Class): BeautifulSoup Object getting website data
+
+    Returns:
+        list: Return a list of matches dict
+    """
     matches = []
     current_event = None
 

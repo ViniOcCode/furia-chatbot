@@ -2,29 +2,61 @@ import requests
 from bs4 import BeautifulSoup
 from app.models.utils import *
 
-URL = f'{DOMAIN}team/8297/furia#' 
-URLT = f'{DOMAIN}team/12774/flyquest#'
-#URLT = f'{DOMAIN}team/10567/flyquest#'
-
 def main():
-    print(get_ranking(URLT,'FURIA'))
+    print(get_ranking(TEAMS['main']['url'], TEAMS['main']['name']))
 
 # gets players
 def get_ranking(url, team_name):
+    """Gets the position in leaderboard on hltv
+
+    Args:
+        url (str): Recieves an hltv's url to leaderboard of all teams positions
+
+    Returns:
+        dict: Returns a dict with 2 keys: 
+            - world (str): World ranking position 
+            - regional (str): Regional ranking position
+    """
     soup = url_world_ranking(url, HEADERS)
     return ranking(soup, team_name)
 
 def url_world_ranking(url, headers):
+    """Define the url for BeautifulSoup using request
+
+    Args:
+        url (str): Build the url using the hltv's team page 
+        headers (str): Headers for HTTP requests
+
+    Returns:
+        Class: BeautifulSoup Object with parsed html
+    """
     response = requests.get(url, headers=headers).text
     return BeautifulSoup(response, 'html.parser')
     
 def url_regional_ranking():
+    """Define the url for BeautifulSoup using request
+
+    Args:
+        url (str): Build the url using the hltv's leaderboard page 
+        headers (str): Headers for HTTP requests
+
+    Returns:
+        Class: BeautifulSoup Object with parsed html
+    """
     url = f'{DOMAIN}ranking/teams/2025/april/21/country/Brazil'
     response = requests.get(url, headers=HEADERS).text
     return BeautifulSoup(response, 'html.parser')
 
 # search for players
 def ranking(soup, team_name):
+    """Webscrap hltv's events tab to get soon events
+
+    Args:
+        soup (Class): BeautifulSoup Object getting website data
+
+    Returns:
+        dict: Return a dict with position values
+    """
     rankings = {
           'world': None,
           'regional': None,
