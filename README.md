@@ -25,7 +25,7 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 - Você instalou a versão mais recente de 
  - Python 3.x e instalou os requerimentos usando `pip install requeriments.txt`
-- Você leu como o projeto [funciona](#como-funciona-o-chatbot-da-furia)
+- Você leu como o projeto na seção: `🧠 Como funciona o ChatBot da FURIA`
 
 ## 🚀 instalando o ChatBot da Furia
 
