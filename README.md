@@ -78,7 +78,7 @@ O ChatBot é dividido em módulos especializados que interpretam mensagens e ret
 ---
 
 ### 📁 Estrutura do Projeto
-
+```
 FURIA-CHATBOT/
 │
 ├── app/
@@ -108,6 +108,7 @@ FURIA-CHATBOT/
 ├── requirements.txt               # Dependências do projeto
 ├── .gitignore
 └── README.md
+``
 ## 📝 Licença
 
 Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
