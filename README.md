@@ -18,7 +18,6 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [ ] Melhorar o sistema de detecção de intenção usando NLP (tipo spaCy ou transformers).
 - [ ] Implementar cache para diminuir requisições desnecessárias.
 - [ ] Criar API REST para usar o bot em frontends.
-- [ ] Tarefa 5
 
 ## 💻 Pré-requisitos
 
