@@ -25,7 +25,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 - Você instalou a versão mais recente de `Python3 com Flask, Unidecode e RapidFuzz`
-- Você leu como o projeto [funciona](##🧠-como-funciona-o-chatbot-da-furia)
+- Você leu como o projeto [funciona](##como-funciona-o-chatbot-da-furia)
 
 ## 🚀 instalando o ChatBot da Furia
 
@@ -62,7 +62,7 @@ Como alternativa, consulte a documentação do GitHub em [como criar uma solicit
 
 ---
 
-## 🧠 Como funciona o ChatBot da FURIA
+## Como funciona o ChatBot da FURIA
 
 O ChatBot é dividido em módulos especializados que interpretam mensagens e retornam respostas com base no conteúdo.
 
