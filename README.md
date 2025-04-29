@@ -62,7 +62,7 @@ Como alternativa, consulte a documentação do GitHub em [como criar uma solicit
 
 ---
 
-## 🧠 Como funciona o ChatBot da FURIA
+## Como funciona o ChatBot da FURIA
 
 O ChatBot é dividido em módulos especializados que interpretam mensagens e retornam respostas com base no conteúdo.
 
