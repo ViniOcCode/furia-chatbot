@@ -25,14 +25,14 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 - Você instalou a versão mais recente de 
  - Python 3.x e instalou os requerimentos usando `pip install requeriments.txt`
-- Você leu como o projeto na seção: `🧠 Como funciona o ChatBot da FURIA`
+- Você leu como o projeto na [seção](#como-funciona-o-ChatBot-da-FURIA)
 
 ## 🚀 instalando o ChatBot da Furia
 
 Se você quiser instalar o código fonte para depuarar em seu ambiente basta você fazer
 
 ```bash
-git clone chatbotdafuria
+git clone https://github.com/ViniOcCode/furia-chatbot.git
 ```
 
 ## ☕ Usando o ChatBot da Furia
