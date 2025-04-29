@@ -6,7 +6,7 @@
 ![Bitbucket open issues](https://img.shields.io/bitbucket/issues/iuricode/README-template?style=for-the-badge)
 ![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/iuricode/README-template?style=for-the-badge)
 
-<img src="app/static/bot-con" alt="Panterinha">
+<img src="app/static/bot-icon" alt="Panterinha">
 
 > Um chatbot focado para os fãs de CS da FURIA! Focado em prover informações rápido e fácil!
 
