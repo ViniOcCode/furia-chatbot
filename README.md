@@ -25,8 +25,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 - Você instalou a versão mais recente de `Python3 com Flask, Unidecode e RapidFuzz`
-- Você tem uma máquina `<Windows / Linux / Mac>`. Indique qual sistema operacional é compatível / não compatível.
-- Você leu `<guia / link / documentação_relacionada_ao_projeto>`.
+- Você leu como o projeto [funciona](## 🧠 Como funciona o ChatBot da FURIA)
 
 ## 🚀 instalando o ChatBot da Furia
 
@@ -49,8 +48,6 @@ Para usar O ChatBot da Furia, você pode perguntar sobre:
  - 📅 Próximos eventos (Time principal e time feminino)
  - 🧑‍🤝‍🧑 Elenco atual (Time principal e time feminino)
 
-Adicione comandos de execução e exemplos que você acha que os usuários acharão úteis. Forneça uma referência de opções para pontos de bônus!
-
 ## 📫 Contribuindo para o ChatBot da FURIA
 
 Para contribuir com o ChatBot da FURIA siga estas etapas:
@@ -63,6 +60,54 @@ Para contribuir com o ChatBot da FURIA siga estas etapas:
 
 Como alternativa, consulte a documentação do GitHub em [como criar uma solicitação pull](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
+---
+
+## 🧠 Como funciona o ChatBot da FURIA
+
+O ChatBot é dividido em módulos especializados que interpretam mensagens e retornam respostas com base no conteúdo.
+
+## 🔁 Fluxo de mensagem
+
+1. Usuário envia mensagem via frontend (form no `index.html`)
+2. `script.js` faz `fetch('/chat')` com o texto do usuário
+3. `controllers/chat.py` recebe o POST e envia para `chatresponses.py`
+4. A função analisa a intenção usando palavras-chave (com `RapidFuzz`)
+5. Se necessário, busca dados em `lineup.py`, `matches.py`, `ranking.py`, etc.
+6. Retorna a resposta formatada ao frontend
+
+---
+
+### 📁 Estrutura do Projeto
+
+FURIA-CHATBOT/
+│
+├── app/
+│   ├── controllers/
+│   │   └── chat.py                # Rota que recebe a mensagem do usuário e retorna a resposta
+│   │
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── chatresponses.py       # Lógica para identificar intenção e gerar resposta
+│   │   ├── events.py              # Eventos futuros da FURIA
+│   │   ├── lineup.py              # Elenco atual (time principal e feminino)
+│   │   ├── matches.py             # Últimos e próximos jogos
+│   │   ├── ranking.py             # Ranking nacional e internacional
+│   │   └── utils.py               # Palavras-chave e dados estáticos
+│
+├── static/                        # Arquivos estáticos para o frontend
+│   ├── bot-icon.png
+│   ├── user-icon.png
+│   ├── script.js                  # JS que envia a mensagem do usuário via fetch
+│   └── styles.css                 # Estilos do chat no frontend
+│
+├── templates/
+│   └── __init__.py (vazio ou não usado)
+│   └── index.html                 # Página HTML do chatbot
+│
+├── main.py                        # Cria a app Flask e registra as rotas
+├── requirements.txt               # Dependências do projeto
+├── .gitignore
+└── README.md
 ## 📝 Licença
 
 Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
