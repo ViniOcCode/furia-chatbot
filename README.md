@@ -24,8 +24,9 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
-- Você instalou a versão mais recente de `Python3 com Flask, Unidecode e RapidFuzz`
-- Você leu como o projeto [funciona](##como-funciona-o-chatbot-da-furia)
+- Você instalou a versão mais recente de 
+ - Python 3.x e instalou os requerimentos usando `pip install requeriments.txt`
+- Você leu como o projeto [funciona](#como-funciona-o-chatbot-da-furia)
 
 ## 🚀 instalando o ChatBot da Furia
 
@@ -62,7 +63,7 @@ Como alternativa, consulte a documentação do GitHub em [como criar uma solicit
 
 ---
 
-## Como funciona o ChatBot da FURIA
+## 🧠 Como funciona o ChatBot da FURIA
 
 O ChatBot é dividido em módulos especializados que interpretam mensagens e retornam respostas com base no conteúdo.
 
@@ -108,7 +109,7 @@ FURIA-CHATBOT/
 ├── requirements.txt               # Dependências do projeto
 ├── .gitignore
 └── README.md
-``
+``` 
 ## 📝 Licença
 
 Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
