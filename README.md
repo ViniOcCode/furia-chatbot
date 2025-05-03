@@ -12,7 +12,7 @@
 
 ### Ajustes e melhorias
 
-O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas para as seguintes tarefas:
+O projeto é um protótipo e as melhorias possíveis seriam:
 
 - [ ] Integrar WebSocket para dados de jogos ao vivo
 - [ ] Melhorar o sistema de detecção de intenção usando NLP (tipo spaCy ou transformers).
@@ -23,11 +23,15 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
-- Você instalou a versão mais recente de 
- - Python 3.x e instalou os requerimentos usando `pip install requeriments.txt`
-- Você leu como o projeto [funciona](#como-funciona-o-ChatBot-da-FURIA)
+- Python 3.13 e instalou os requerimentos usando 
+```bash
+pip install requirements.txt
+```
+- Você leu como o projeto [funciona](#como-funciona-a-aplicação)
+- OU para você pular todos esses passos, você pode baixar Docker e dar uma olhada [aqui](README.docker.md)
 
-## 🚀 instalando o ChatBot da Furia
+
+## 🚀 instalando a aplicação
 
 Se você quiser instalar o código fonte para depuarar em seu ambiente basta você fazer
 
@@ -35,7 +39,7 @@ Se você quiser instalar o código fonte para depuarar em seu ambiente basta voc
 git clone https://github.com/ViniOcCode/furia-chatbot.git
 ```
 
-## ☕ Usando o ChatBot da Furia
+## ☕ Usando a aplicação
 
 Para usar O ChatBot da Furia, você pode perguntar sobre:
  - 🤖 Quem criou o bot
@@ -48,9 +52,9 @@ Para usar O ChatBot da Furia, você pode perguntar sobre:
  - 📅 Próximos eventos (Time principal e time feminino)
  - 🧑‍🤝‍🧑 Elenco atual (Time principal e time feminino)
 
-## 📫 Contribuindo para o ChatBot da FURIA
+## 📫 Contribuindo para a aplicação
 
-Para contribuir com o ChatBot da FURIA siga estas etapas:
+Para contribuir com a aplicação da FURIA siga estas etapas:
 
 1. Bifurque este repositório.
 2. Crie um branch: `git checkout -b <nome_branch>`.
@@ -62,11 +66,11 @@ Como alternativa, consulte a documentação do GitHub em [como criar uma solicit
 
 ---
 
-## Como funciona o ChatBot da FURIA
+## Como funciona a aplicação
 
 O ChatBot é dividido em módulos especializados que interpretam mensagens e retornam respostas com base no conteúdo.
 
-## 🔁 Fluxo de mensagem
+## 🔁 Fluxo da aplicação 
 
 1. Usuário envia mensagem via frontend (form no `index.html`)
 2. `script.js` faz `fetch('/chat')` com o texto do usuário
@@ -85,14 +89,13 @@ FURIA-CHATBOT/
 │   ├── controllers/
 │   │   └── chat.py                # Rota que recebe a mensagem do usuário e retorna a resposta
 │   │
-│   ├── models/
-│   │   ├── __init__.py
-│   │   ├── chatresponses.py       # Lógica para identificar intenção e gerar resposta
-│   │   ├── events.py              # Eventos futuros da FURIA
-│   │   ├── lineup.py              # Elenco atual (time principal e feminino)
-│   │   ├── matches.py             # Últimos e próximos jogos
-│   │   ├── ranking.py             # Ranking nacional e internacional
-│   │   └── utils.py               # Palavras-chave e dados estáticos
+│   └── models/
+│      ├── chatresponses.py       # Lógica para identificar intenção e gerar resposta
+│      ├── events.py              # Eventos futuros da FURIA
+│      ├── lineup.py              # Elenco atual (time principal e feminino)
+│      ├── matches.py             # Últimos e próximos jogos
+│      ├── ranking.py             # Ranking nacional e internacional
+│      └── utils.py               # Palavras-chave e dados estáticos
 │
 ├── static/                        # Arquivos estáticos para o frontend
 │   ├── bot-icon.png
@@ -101,14 +104,14 @@ FURIA-CHATBOT/
 │   └── styles.css                 # Estilos do chat no frontend
 │
 ├── templates/
-│   └── __init__.py (vazio ou não usado)
 │   └── index.html                 # Página HTML do chatbot
 │
 ├── main.py                        # Cria a app Flask e registra as rotas
 ├── requirements.txt               # Dependências do projeto
 ├── .gitignore
-└── README.md
+├── README.md
+└── __init__.py                    # Configuração da aplicação Flask
 ``` 
-## 📝 Licença
 
+## 📝 Licença
 Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE) para mais detalhes.
