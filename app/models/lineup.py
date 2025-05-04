@@ -56,7 +56,9 @@ def players(soup):
     if coach_row != None:
         coach = extract_text(coach_row.find('div', class_='text-ellipsis'))
         if coach:
-            lineup['coach'] = coach if coach else 'Desconhecido'
+            lineup['coach'] = coach 
+    else:
+        lineup['coach'] = 'Desconhecido'
 
     table = soup.find('table', class_='players-table')
     rows = table.find_all('tr')

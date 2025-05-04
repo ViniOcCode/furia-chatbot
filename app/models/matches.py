@@ -3,8 +3,9 @@ from bs4 import BeautifulSoup
 from app.models.utils import *
 
 def main():
-    get_soon_matches(TEAMS['main']['url'])
-    get_last_matches(TEAMS['female']['url'])
+    #get_soon_matches(TEAMS['main']['url'])
+    print(get_last_matches(TEAMS['main']['url']))
+    #get_last_matches(TEAMS['female']['url'])
     
 # get the matches
 def get_soon_matches(url):
@@ -137,7 +138,6 @@ def matches(rows):
             team = row.find('a', class_='team-2') or row.find('span', class_='team-2')
             if team:
                 match['enemy'] = team.get_text(strip=True) if 'team-2' in team.get('class', []) else 'A definir'
-                print(match['enemy'])
 
             score_cell = row.find('div', class_='score-cell')
             if score_cell:

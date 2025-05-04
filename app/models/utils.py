@@ -55,7 +55,8 @@ WORDS = [
             'resultado', 'placar', 'score', 'vitória', 'derrota',
             'empate', 'ganhou', 'perdeu', 'venceu', 'perdeu',
             'histórico', 'recente', 'último', 'desfecho', 'resumo',
-            'detalhes', 'performance', 'stats', 'estatísticas', 'rounds','ultimo'
+            'detalhes', 'performance', 'stats', 'estatísticas', 'rounds',
+            'ultimo', 'resultados'
         ]
     },
     {   'name': 'elenco', 
@@ -114,7 +115,7 @@ WORDS = [
             'nível', 'categoria', 'divisão', 'chaveamento', 'seed',
             'cabeça de chave', 'tier', 'grupo', 'faixa', 'patamar',
             'brasil', 'mundo', 'mundial', 'mundialmente', 'brasileiro,'
-            'local', 'nacional'
+            'local', 'nacional', 'ranqueamento', 'global'
         ]
     }
 ]

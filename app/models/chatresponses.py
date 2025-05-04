@@ -185,6 +185,7 @@ def format_match_response(matches, team_name):
     )
 
 def format_lastResults_response(matches, team_name):
+    print(matches)
     if not matches:
         return (f'As panteras da {team_name} não saíram da toca faz um tempo...<br>')
     
@@ -197,7 +198,7 @@ def format_lastResults_response(matches, team_name):
             f'🔢 Resultado:<br>{team_name} {match.get("score", "N/A")}<br>'
             f'📺 Replays: '
             f'<a href="{match['livestreams']}" target="_blank">hltv.tv</a><br>'
-            f'{'-'*29}<br>'
+            f'{'-'*28}<br>'
         )
     return response.strip()
 
@@ -210,7 +211,7 @@ def format_events_response(events, team_name):
         response += (
             f'🕹️ {event['event']}<br>'
             f'📆 {event['date']}<br>'
-            f'{'-'*29}<br>'
+            f'{'-'*28}<br>'
         )
     
     return response.strip()
