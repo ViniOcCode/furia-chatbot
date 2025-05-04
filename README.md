@@ -18,6 +18,7 @@ O projeto é um protótipo e as melhorias possíveis seriam:
 - [ ] Melhorar o sistema de detecção de intenção usando NLP (tipo spaCy ou transformers).
 - [ ] Implementar cache para diminuir requisições desnecessárias.
 - [ ] Criar API REST para usar o bot em frontends.
+- [ ] Em vez de respostas predefinidas, usar uma LLM para respostas mais orgânicas.
 
 ## 💻 Pré-requisitos
 
@@ -41,7 +42,7 @@ git clone https://github.com/ViniOcCode/furia-chatbot.git
 
 ## ☕ Usando a aplicação
 
-Para usar O ChatBot da Furia, você pode perguntar sobre:
+Você pode perguntar para a Panterinha sobre:
  - 🤖 Quem criou o bot
  - 🎲 Curiosidade aleatória
  - 🐱‍👤 Sobre a FURIA
