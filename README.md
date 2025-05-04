@@ -42,7 +42,7 @@ git clone https://github.com/ViniOcCode/furia-chatbot.git
 
 ## ☕ Usando a aplicação
 
-Para usar O ChatBot da Furia, você pode perguntar sobre:
+Você pode perguntar para a Panterinha sobre:
  - 🤖 Quem criou o bot
  - 🎲 Curiosidade aleatória
  - 🐱‍👤 Sobre a FURIA
