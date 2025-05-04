@@ -185,7 +185,6 @@ def format_match_response(matches, team_name):
     )
 
 def format_lastResults_response(matches, team_name):
-    print(matches)
     if not matches:
         return (f'As panteras da {team_name} não saíram da toca faz um tempo...<br>')
     
