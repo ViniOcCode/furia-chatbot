@@ -74,7 +74,6 @@ def match_response(message):
 
 def default_response():
     return (
-        'Não consegui entender, foi mal!<br>'
         'Aqui vai uma lista do que você pode me perguntar:<br>'
         '<ul style="list-style: none; padding: 0;">'
             '<li>🤖 Quem criou o bot</li>'
