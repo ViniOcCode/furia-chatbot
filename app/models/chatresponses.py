@@ -203,7 +203,7 @@ def format_lastResults_response(matches, team_name):
 
 def format_events_response(events, team_name):
     if not events:
-        return f'As panteras da {team_name}parecem não ter nenhum atividade pela frente'
+        return f'As panteras da {team_name} parecem não ter nenhuma atividade pela frente'
 
     response = f'As próximas aparições das panteras da {team_name} serão em:<br><br>'
     for event in events:

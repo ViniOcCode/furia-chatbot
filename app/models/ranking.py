@@ -1,85 +1,83 @@
-import requests
 from bs4 import BeautifulSoup
 from app.models.utils import *
 
 def main():
     print(get_ranking(TEAMS['main']['url'], TEAMS['main']['name']))
 
-# gets players
 def get_ranking(url, team_name):
-    """Gets the position in leaderboard on hltv
+    """Gets the position in leaderboard on HLTV
 
     Args:
-        url (str): Recieves an hltv's url to leaderboard of all teams positions
+        url (str): Receives an HLTV's URL to the leaderboard of all teams' positions
+        team_name (str): Name of the team to search for in the regional ranking
 
     Returns:
         dict: Returns a dict with 2 keys: 
             - world (str): World ranking position 
             - regional (str): Regional ranking position
     """
-    soup = url_world_ranking(url, HEADERS)
+    soup = url_world_ranking(url)
     return ranking(soup, team_name)
 
-def url_world_ranking(url, headers):
-    """Define the url for BeautifulSoup using request
+def url_world_ranking(url):
+    """Defines the URL for BeautifulSoup using cloudscraper
 
     Args:
-        url (str): Build the url using the hltvs team page 
-        headers (str): Headers for HTTP requests
+        url (str): Builds the URL using the HLTV's team page 
 
     Returns:
-        Class: BeautifulSoup Object with parsed html
+        BeautifulSoup: BeautifulSoup Object with parsed HTML
     """
-    response = requests.get(url, headers=headers).text
+    response = scraper.get(url).text
     return BeautifulSoup(response, 'html.parser')
-    
-def url_regional_ranking():
-    """Define the url for BeautifulSoup using request
 
-    Args:
-        url (str): Build the url using the hltvs leaderboard page 
-        headers (str): Headers for HTTP requests
+def url_regional_ranking():
+    """Defines the URL for BeautifulSoup using cloudscraper
 
     Returns:
-        Class: BeautifulSoup Object with parsed html
+        BeautifulSoup: BeautifulSoup Object with parsed HTML
     """
     url = f'{DOMAIN}ranking/teams/2025/april/21/country/Brazil'
-    response = requests.get(url, headers=HEADERS).text
+    response = scraper.get(url).text
     return BeautifulSoup(response, 'html.parser')
 
-# search for players
 def ranking(soup, team_name):
-    """Webscrap hltvs events tab to get soon events
+    """Webscrapes HLTV's ranking pages to get world and regional rankings
 
     Args:
-        soup (Class): BeautifulSoup Object getting website data
+        soup (BeautifulSoup): BeautifulSoup Object containing the world ranking page
+        team_name (str): Name of the team to search for in the regional ranking
 
     Returns:
-        dict: Return a dict with position values
+        dict: Returns a dict with position values
+            - world (str): World ranking position
+            - regional (str): Regional ranking position
     """
     rankings = {
-          'world': None,
-          'regional': None,
+        'world': None,
+        'regional': None,
     }
-    #:- selects the fist div that haves world in it, this is beautifulsoup feature
-    # when find it, selects a section
+
+    # Get world ranking
     world_rank = soup.select_one('div.profile-team-stat:-soup-contains("World") a')
     if world_rank:
-        rankings['world'] = extract_text(world_rank) if world_rank else 'Desconhecido'
+        rankings['world'] = extract_text(world_rank) if world_rank else 'Unknown'
 
-        
+    # Get regional ranking
     soup = url_regional_ranking()
     ranking_cell = soup.find('div', class_='ranking')
-    tables = ranking_cell.find_all('div', class_='ranked-team')
-    for table in tables:
-        ranking_header = table.find('div', class_='ranking-header')
-        ranking = ranking_header.find('span', class_='position')
+    if ranking_cell:
+        tables = ranking_cell.find_all('div', class_='ranked-team')
+        for table in tables:
+            ranking_header = table.find('div', class_='ranking-header')
+            ranking_pos = ranking_header.find('span', class_='position') if ranking_header else None
 
-        heading = table.find('div', class_='relative')
-        team_row = heading.find('span', class_='name')
-        team = extract_text(team_row).upper()
-        if team == team_name.upper():
-            rankings['regional'] = extract_text(ranking) if ranking else 'Desconhecido'
+            heading = table.find('div', class_='relative')
+            team_row = heading.find('span', class_='name') if heading else None
+            team = extract_text(team_row).upper() if team_row else ''
+            if team == team_name.upper():
+                rankings['regional'] = extract_text(ranking_pos) if ranking_pos else 'Unknown'
+                break
 
     return rankings
 

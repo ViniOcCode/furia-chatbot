@@ -99,7 +99,7 @@ body {
 .message-content {
     flex: 1;
     word-wrap: break-word;
-    max-width: calc(100% - 50px);
+    max-width: calc(100% - 20px);
     overflow: hidden; 
 }
 

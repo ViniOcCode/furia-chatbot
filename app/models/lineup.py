@@ -1,50 +1,48 @@
-import requests
+import cloudscraper
 from bs4 import BeautifulSoup
 from app.models.utils import *
 
 def main():
-    print(get_players())
+    print(get_players("https://www.hltv.org/team/6667/9z"))
 
-# gets players
 def get_players(url):
-    """Gets the requested teams lineup
+    """Gets the requested team's lineup.
 
     Args:
-        url (str): Recieves an hltvs url to teams lineup
+        url (str): Receives an HLTV URL to the team's lineup.
 
     Returns:
-        dict: Returns a dict with 2 keys: 
-            - players (list): Players name
-            - coach (str): Teams coach
+        dict: Returns a dictionary with two keys:
+            - players (list): List of player names.
+            - coach (str): Team's coach name.
     """
-    soup = url_players(url, HEADERS)
+    soup = url_players(url)
     return players(soup)
 
-def url_players(url, headers):
-    """Define the url for BeautifulSoup using request
+def url_players(url):
+    """Defines the URL for BeautifulSoup using cloudscraper.
 
     Args:
-        url (str): Build the url using the hltvs roster box
-        headers (str): Headers for HTTP requests
+        url (str): Builds the URL using the HLTV roster box.
 
     Returns:
-        Class: BeautifulSoup Object with parsed html
+        BeautifulSoup: BeautifulSoup object with parsed HTML.
     """
-    url = f'{url}tab-rosterBox' 
-    response = requests.get(url, headers=headers).text
+    full_url = f'{url}#tab-rosterBox'
+    scraper = cloudscraper.create_scraper()
+    response = scraper.get(full_url).text
     return BeautifulSoup(response, 'html.parser')
 
-# search for players
 def players(soup):
-    """Webscrap hltvs roster box tab to entire lineup if possible 
+    """Webscrapes HLTV's roster box tab to retrieve the entire lineup if possible.
 
     Args:
-        soup (Class): BeautifulSoup Object getting website data
+        soup (BeautifulSoup): BeautifulSoup object containing website data.
 
     Returns:
-        dict: Return a dict with players list and coach name 
-            - players (list): All player's name
-            - coach (str): Coach's name
+        dict: Returns a dictionary with players list and coach name:
+            - players (list): All player names.
+            - coach (str): Coach's name.
     """
     lineup = {
         'players': [],
@@ -53,25 +51,23 @@ def players(soup):
 
     # Get coach
     coach_row = soup.find('table', class_='coach-table')
-    if coach_row != None:
+    if coach_row is not None:
         coach = extract_text(coach_row.find('div', class_='text-ellipsis'))
         if coach:
-            lineup['coach'] = coach 
+            lineup['coach'] = coach
     else:
         lineup['coach'] = 'Desconhecido'
 
     table = soup.find('table', class_='players-table')
-    rows = table.find_all('tr')
+    if table:
+        rows = table.find_all('tr')
+        for row in rows:
+            player = extract_text(row.find('div', class_='text-ellipsis'))
+            if player:
+                if row.find('div', class_='player-benched'):
+                    player = f'{player} - (Reserva)'
+                lineup['players'].append(player)
 
-    for row in rows:
-        
-        player = extract_text(row.find('div', class_='text-ellipsis'))
-        if player:
-            if row.find('div', class_='player-benched'):
-                player = f'{player} - (Reserva)'
-            lineup['players'].append(player)
-
-    
     return lineup
 
 if __name__ == '__main__':

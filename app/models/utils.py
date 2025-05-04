@@ -1,8 +1,15 @@
+import cloudscraper
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
+scraper = cloudscraper.create_scraper(
+    browser={
+        'browser': 'chrome',  # emulate Chrome
+        'platform': 'windows'
+    }
+)
 DOMAIN = 'https://www.hltv.org/'
-HEADERS = {'User-Agent': 'Mozzila/5.0'}
+HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'}
 
 TEAMS = {
     'main': {
