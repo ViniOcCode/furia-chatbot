@@ -15,7 +15,7 @@ ___
 
 ## 🕹️ Como rodar o container
 ```bash
-docker run -p 8080:5000 furia-chatbot1.0
+docker run --rm -p 8080:5000 furia-chatbot:1.0
 ```
 A porta pode local pode ser qualquer uma! Você escolhe uma para você, ela que vai rodar o localhost. Por exemplo, se você colocar 8080, a aplicação estará rodando na porta 8080, portanto basta colocar isso no navegador:
 ```bash

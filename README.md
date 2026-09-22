@@ -1,112 +1,157 @@
-# Panterinha | o ChatBot da FURIA
+# Panterinha — FURIA Fan Chatbot
 
-<img src="app/static/bot-icon.png" alt="Panterinha">
+[![Tests](https://github.com/ViniOcCode/furia-chatbot/actions/workflows/tests.yml/badge.svg)](https://github.com/ViniOcCode/furia-chatbot/actions/workflows/tests.yml)
 
-> Um chatbot focado para os fãs de CS da FURIA! Focado em prover informações rápido e fácil!
+An unofficial Flask chatbot prototype for Counter-Strike fans. Panterinha combines fuzzy intent recognition with modular web-scraping adapters to answer questions about FURIA's teams, matches, events, rankings, and lineups.
 
-### Ajustes e melhorias
+<p align="center">
+  <img src="app/static/bot-icon.png" alt="Panterinha chatbot icon" width="180">
+</p>
 
-O projeto é um protótipo e as melhorias possíveis seriam:
+> [!NOTE]
+> This is an independent educational fan project. It is not affiliated with or endorsed by FURIA or HLTV. Live answers depend on third-party page structure and may become unavailable when those pages change.
 
-- [ ] Integrar WebSocket para dados de jogos ao vivo
-- [ ] Melhorar o sistema de detecção de intenção usando NLP (tipo spaCy ou transformers).
-- [ ] Implementar cache para diminuir requisições desnecessárias.
-- [ ] Criar API REST para usar o bot em frontends.
-- [ ] Em vez de respostas predefinidas, usar uma LLM para respostas mais orgânicas.
+## What it demonstrates
 
-## 💻 Pré-requisitos
+- A Flask JSON endpoint consumed by a browser chat interface.
+- Accent-insensitive message normalization.
+- Fuzzy keyword matching with RapidFuzz.
+- Intent routing separated from response formatting.
+- Team-context detection for the main and women's rosters.
+- Modular parsers for matches, events, rankings, and lineups.
+- Brazilian timezone conversion for match and event timestamps.
+- Containerized execution with Docker and deployment configuration for Fly.io.
+- Offline automated tests for HTTP routes, intent selection, team context, and HTML parsing.
 
-Antes de começar, verifique se você atendeu aos seguintes requisitos:
+## Supported questions
 
-- Python 3.13 e instalou os requerimentos usando 
-```bash
-pip install requirements.txt
+Panterinha recognizes questions about:
+
+- Recent and upcoming matches.
+- Main and women's lineups.
+- Upcoming events.
+- Global and Brazilian rankings.
+- Where to watch matches.
+- FURIA facts and official social links.
+
+## Request flow
+
+```text
+Browser chat
+    -> POST /chat
+    -> normalize + fuzzy intent match
+    -> select team context
+    -> local response or scraping adapter
+    -> formatted JSON response
 ```
-- Você leu como o projeto [funciona](#como-funciona-a-aplicação)
-- OU para você pular todos esses passos, você pode baixar Docker e dar uma olhada [aqui](README.docker.md)
 
+Only intents that need changing information call the external adapters. Greetings, help, social links, and trivia are produced locally.
 
-## 🚀 instalando a aplicação
+## Technology stack
 
-Se você quiser instalar o código fonte para depuarar em seu ambiente basta você fazer
+- Python 3.13
+- Flask
+- RapidFuzz and Unidecode
+- Beautiful Soup and Cloudscraper
+- HTML, CSS, and JavaScript
+- Gunicorn and Docker
+- Pytest and GitHub Actions
+
+## Running locally
 
 ```bash
 git clone https://github.com/ViniOcCode/furia-chatbot.git
+cd furia-chatbot
+python -m venv .venv
 ```
 
-## ☕ Usando a aplicação
+Activate the environment:
 
-Você pode perguntar para a Panterinha sobre:
- - 🤖 Quem criou o bot
- - 🎲 Curiosidade aleatória
- - 🐱‍👤 Sobre a FURIA
- - 📺 Onde assistir as transmissões?
- - 📊 Resultados recentes (Time principal e time feminino)
- - 🥇 Ranqueamento global e nacional (Time principal e time feminino)
- - 🎯 Próximo jogo (Time principal e time feminino)
- - 📅 Próximos eventos (Time principal e time feminino)
- - 🧑‍🤝‍🧑 Elenco atual (Time principal e time feminino)
+```bash
+# Linux/macOS
+source .venv/bin/activate
 
-## 📫 Contribuindo para a aplicação
-
-Para contribuir com a aplicação da FURIA siga estas etapas:
-
-1. Bifurque este repositório.
-2. Crie um branch: `git checkout -b <nome_branch>`.
-3. Faça suas alterações e confirme-as: `git commit -m '<mensagem_commit>'`
-4. Envie para o branch original: `git push origin <nome_do_projeto> / <local>`
-5. Crie a solicitação de pull.
-
-Como alternativa, consulte a documentação do GitHub em [como criar uma solicitação pull](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
-
----
-
-## Como funciona a aplicação
-
-O ChatBot é dividido em módulos especializados que interpretam mensagens e retornam respostas com base no conteúdo.
-
-## 🔁 Fluxo da aplicação 
-
-1. Usuário envia mensagem via frontend (form no `index.html`)
-2. `script.js` faz `fetch('/chat')` com o texto do usuário
-3. `controllers/chat.py` recebe o POST e envia para `chatresponses.py`
-4. A função analisa a intenção usando palavras-chave (com `RapidFuzz`)
-5. Se necessário, busca dados em `lineup.py`, `matches.py`, `ranking.py`, etc.
-6. Retorna a resposta formatada ao frontend
-
----
-
-### 📁 Estrutura do Projeto
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
 ```
-FURIA-CHATBOT/
-│
-├── app/
-│   ├── controllers/
-│   │   └── chat.py                # Rota que recebe a mensagem do usuário e retorna a resposta
-│   │
-│   └── models/
-│      ├── chatresponses.py       # Lógica para identificar intenção e gerar resposta
-│      ├── events.py              # Eventos futuros da FURIA
-│      ├── lineup.py              # Elenco atual (time principal e feminino)
-│      ├── matches.py             # Últimos e próximos jogos
-│      ├── ranking.py             # Ranking nacional e internacional
-│      └── utils.py               # Palavras-chave e dados estáticos
-│
-├── static/                        # Arquivos estáticos para o frontend
-│   ├── bot-icon.png
-│   ├── user-icon.png
-│   ├── script.js                  # JS que envia a mensagem do usuário via fetch
-│   └── styles.css                 # Estilos do chat no frontend
-│
-├── templates/
-│   └── index.html                 # Página HTML do chatbot
-│
-├── main.py                        # Cria a app Flask e registra as rotas
-├── requirements.txt               # Dependências do projeto
-├── .gitignore
-├── README.md
-└── __init__.py                    # Configuração da aplicação Flask
-``` 
 
-## 📝 Licença
-Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE) para mais detalhes.
+Install and start the development server:
+
+```bash
+pip install -r requirements.txt
+python main.py
+```
+
+Open [http://localhost:5000](http://localhost:5000).
+
+## Docker
+
+```bash
+docker build -t furia-chatbot:1.0 .
+docker run --rm -p 8080:5000 furia-chatbot:1.0
+```
+
+Open [http://localhost:8080](http://localhost:8080). Additional container commands are documented in [README.docker.md](README.docker.md).
+
+## Tests
+
+```bash
+pip install -r requirements-dev.txt
+pytest -q
+```
+
+The tests intentionally use controlled HTML fixtures rather than contacting HLTV, making the CI suite deterministic and respectful of the external service.
+
+## Project structure
+
+```text
+app/
+  controllers/chat.py       Flask routes
+  models/chatresponses.py   Intent routing and response formatting
+  models/matches.py         Match parser
+  models/events.py          Event parser
+  models/lineup.py          Roster parser
+  models/ranking.py         Ranking parser
+  models/utils.py           Keywords, teams, dates, and shared HTTP client
+  static/                   Browser UI assets
+  templates/                Chat page
+tests/                      Offline behavior and parser tests
+main.py                     Application entry point
+```
+
+## Limitations
+
+- The chatbot uses fuzzy keyword routing rather than a trained language model.
+- Scraping adapters are coupled to third-party HTML and require maintenance when markup changes.
+- Some static trivia and ranking routes reflect the project's original 2025 prototype period.
+- Responses are informational and should be checked against official sources for current competitive data.
+
+## License
+
+[MIT](LICENSE)
+
+<details>
+<summary><strong>Português</strong></summary>
+
+## Sobre o projeto
+
+Panterinha é um protótipo não oficial de chatbot para fãs de Counter-Strike. A aplicação usa Flask, reconhecimento aproximado de intenções e módulos de scraping para responder perguntas sobre partidas, eventos, rankings e escalações da FURIA.
+
+Este é um projeto educacional independente, sem afiliação ou endosso da FURIA ou da HLTV. Respostas dinâmicas dependem da estrutura de páginas externas e podem deixar de funcionar quando essas páginas mudam.
+
+### O que o projeto demonstra
+
+- API Flask consumida pela interface de chat.
+- Normalização de mensagens e reconhecimento de intenção com RapidFuzz.
+- Detecção de contexto entre os times principal e feminino.
+- Parsers separados para partidas, eventos, rankings e escalações.
+- Conversão de datas para o fuso brasileiro.
+- Docker, configuração de deploy e testes automatizados sem acesso à rede.
+
+### Execução
+
+Crie um ambiente virtual, instale `requirements.txt`, execute `python main.py` e acesse [http://localhost:5000](http://localhost:5000).
+
+Para executar os testes, instale `requirements-dev.txt` e rode `pytest -q`.
+
+</details>
